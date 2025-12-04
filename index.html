@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Portal</title>
+    <link rel="icon" type="jpg" href="images-removebg-preview.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>InterviewPrep AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#" class="nav-link" data-page="quiz">
+                    <i class="fas fa-question-circle"></i> Quiz
+                </a>
+                <a href="#" class="nav-link" data-page="practice">
+                    <i class="fas fa-book-open"></i> Practice
+                </a>
+                <a href="#" class="nav-link" data-page="flashcards">
+                    <i class="fas fa-clone"></i> Flashcards
+                </a>
+                <a href="#" class="nav-link" data-page="mock">
+                    <i class="fas fa-clock"></i> Mock Test
+                </a>
+                <a href="#" class="nav-link" data-page="favorites">
+                    <i class="fas fa-heart"></i> Favorites
+                </a>
+                <a href="#" class="nav-link" data-page="analytics">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </a>
+                <a href="#" class="nav-link" data-page="resources">
+                    <i class="fas fa-download"></i> Resources
+                </a>
+                <a href="#" class="nav-link" data-page="profile">
+                    <i class="fas fa-user-circle"></i> Profile
+                </a>
+                <a href="#" class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <h1 class="hero-title">Ace Your Interview with AI Help! 🚀</h1>
+                <p class="hero-subtitle">Practice 100+ interview questions with Quiz Mode, Mock Tests, Flashcards & More!</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" id="startQuizBtn">
+                        <i class="fas fa-play"></i> Start Quiz
+                    </button>
+                    <button class="btn btn-secondary btn-large" id="startMockBtn">
+                        <i class="fas fa-clock"></i> Mock Test
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card" data-page="quiz">
+                    <i class="fas fa-question-circle feature-icon"></i>
+                    <h3>Quiz Mode</h3>
+                    <p>Multiple choice questions with instant feedback and scoring</p>
+                </div>
+                <div class="feature-card" data-page="mock">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h3>Mock Interview</h3>
+                    <p>Timed tests to simulate real interview conditions</p>
+                </div>
+                <div class="feature-card" data-page="flashcards">
+                    <i class="fas fa-clone feature-icon"></i>
+                    <h3>Flashcards</h3>
+                    <p>Quick revision with swipeable flashcards</p>
+                </div>
+                <div class="feature-card" data-page="practice">
+                    <i class="fas fa-book-open feature-icon"></i>
+                    <h3>Practice Mode</h3>
+                    <p>Detailed answers for comprehensive learning</p>
+                </div>
+                <div class="feature-card" data-page="analytics">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your improvement with detailed analytics</p>
+                </div>
+                <div class="feature-card" data-page="resources">
+                    <i class="fas fa-download feature-icon"></i>
+                    <h3>Download PDFs</h3>
+                    <p>Get important questions as PDF for offline study</p>
+                </div>
+            </div>
+
+            <!-- Daily Challenge -->
+            <div class="container" style="margin-top: 3rem;">
+                <div class="card daily-challenge">
+                    <h3>🏆 Daily Challenge ⚡</h3>
+                    <p>✨ Complete 5 random questions to maintain your streak! ✨</p>
+
+                    <button class="btn btn-primary" id="startDailyChallengeBtn">
+                        🚀 Start Today's Challenge
+                    </button>
+
+                    <p class="streak-counter">🔥 Current Streak: <span id="streakCount">0</span> days</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Page -->
+        <section id="quiz" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-question-circle"></i> Quiz Mode</h2>
+                
+                <div class="card">
+                    <div class="quiz-setup">
+                        <div class="setup-row">
+                            <div class="setup-item">
+                                <label>Select Topic:</label>
+                                <select id="quizTopicSelect" class="select-input">
+                                    <option value="">All Topics (Mixed)</option>
+                                    <option value="HTML">HTML</option>
+                                    <option value="CSS">CSS</option>
+                                    <option value="JavaScript">JavaScript</option>
+                                    <option value="DBMS">DBMS</option>
+                                    <option value="OS">Operating Systems</option>
+                                    <option value="Networking">Networking</option>
+                                    <option value="Aptitude">Aptitude</option>
+                                    <option value="HR">HR Questions</option>
+                                </select>
+                            </div>
+                            <div class="setup-item">
+                                <label>Number of Questions:</label>
+                                <select id="quizCountSelect" class="select-input">
+                                    <option value="5">5 Questions</option>
+                                    <option value="10" selected>10 Questions</option>
+                                    <option value="15">15 Questions</option>
+                                    <option value="20">20 Questions</option>
+                                </select>
+                            </div>
+                            <div class="setup-item">
+                                <label>Difficulty:</label>
+                                <select id="quizDifficultySelect" class="select-input">
+                                    <option value="all">All Levels</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-large" id="startQuizBtnPage">
+                            <i class="fas fa-play"></i> Start Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quizContainer" class="card quiz-container" style="display: none;">
+                    <div class="quiz-header">
+                        <div class="quiz-progress">
+                            <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="quizProgressBar"></div>
+                            </div>
+                        </div>
+                        <div class="quiz-score">
+                            Score: <span id="quizScore">0</span>/<span id="quizTotal">0</span>
+                        </div>
+
+                        <button class="close-quiz-btn" onclick="closeQuiz()" title="Close Quiz">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="quiz-question">
+                        <span class="question-badge" id="quizTopicBadge">HTML</span>
+                        <h3 id="quizQuestionText"></h3>
+                    </div>
+
+                    <div class="quiz-options" id="quizOptions"></div>
+
+                    <div class="quiz-feedback" id="quizFeedback" style="display: none;"></div>
+
+                    <div class="quiz-actions">
+                        <button class="btn btn-primary" id="nextQuizBtn" style="display: none;">
+                            <i class="fas fa-arrow-right"></i> Next Question
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Results -->
+                <div id="quizResults" class="card quiz-results" style="display: none;">
+                    <div class="results-header">
+                        <i class="fas fa-trophy results-icon"></i>
+                        <h2>Quiz Complete!</h2>
+                    </div>
+                    <div class="results-score">
+                        <div class="score-circle">
+                            <span id="finalScore">0</span>%
+                        </div>
+                        <p id="scoreMessage"></p>
+                    </div>
+                    <div class="results-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span id="correctAnswers">0</span> Correct
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-times-circle"></i>
+                            <span id="wrongAnswers">0</span> Wrong
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="timeTaken">0</span>s
+                        </div>
+                    </div>
+                    <div class="results-actions">
+                        <button class="btn btn-primary" id="retakeQuizBtn">
+                            <i class="fas fa-redo"></i> Retake Quiz
+                        </button>
+                        <button class="btn btn-secondary" id="reviewAnswersBtn">
+                            <i class="fas fa-list"></i> Review Answers
+                        </button>
+                        <button class="btn btn-success" id="newQuizBtn">
+                            <i class="fas fa-play"></i> New Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Review Answers Container -->
+                <div id="reviewContainer" class="review-container" style="display: none;">
+                    <button class="btn btn-secondary" onclick="closeReview()" style="margin-bottom: 2rem;">
+                        <i class="fas fa-arrow-left"></i> Back to Results
+                    </button>
+                    <div id="reviewContent"></div>
+                </div>
+        </section>
+
+        <!-- Practice Page -->
+        <section id="practice" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-book-open"></i> Practice Mode</h2>
+                
+                <div class="card">
+                    <div class="search-filter">
+                        <input type="text" id="searchInput" placeholder="Search questions..." class="search-input">
+                        <select id="practiceTopicFilter" class="select-input">
+                            <option value="">All Topics</option>
+                            <option value="HTML">HTML</option>
+                            <option value="CSS">CSS</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="DBMS">DBMS</option>
+                            <option value="OS">Operating Systems</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Aptitude">Aptitude</option>
+                            <option value="HR">HR Questions</option>
+                        </select>
+                        <button class="btn btn-primary" id="randomPracticeBtn">
+                            <i class="fas fa-random"></i> Random Question
+                        </button>
+                    </div>
+                </div>
+
+                <div id="practiceContainer" class="practice-list"></div>
+            </div>
+        </section>
+
+        <!-- Flashcards Page -->
+        <section id="flashcards" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-clone"></i> Flashcards</h2>
+                <div class="card">
+                    <div class="flashcard-setup">
+                        <select id="flashcardTopicSelect" class="select-input">
+                            <option value="">Select a topic...</option>
+                            <option value="HTML">HTML</option>
+                            <option value="CSS">CSS</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="DBMS">DBMS</option>
+                            <option value="OS">Operating Systems</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Aptitude">Aptitude</option>
+                            <option value="HR">HR Questions</option>
+                        </select>
+                        <button class="btn btn-primary" id="startFlashcardsBtn">
+                            <i class="fas fa-play"></i> Start Flashcards
+                        </button>
+                    </div>
+                </div>
+
+                <div id="flashcardContainer" style="display: none;">
+                    <div class="flashcard-counter">
+                        <span id="flashcardNum">1</span> / <span id="flashcardTotal">10</span>
+                    </div>
+                    
+                    <div class="flashcard" id="flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span class="card-label">Question</span>
+                                <p id="flashcardQuestion"></p>
+                                <p class="flip-hint">Click to flip</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <span class="card-label">Answer</span>
+                                <p id="flashcardAnswer"></p>
+                                <p class="flip-hint">Click to flip back</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard-controls">
+                        <button class="btn btn-secondary" id="prevFlashcard">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn btn-primary" id="flipFlashcard">
+                            <i class="fas fa-sync-alt"></i> Flip Card
+                        </button>
+                        <button class="btn btn-secondary" id="nextFlashcard">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mock Interview Page -->
+        <section id="mock" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-clock"></i> Mock Interview Test</h2>
+                
+                <div class="card">
+                    <div class="mock-setup">
+                        <h3>Setup Your Mock Interview</h3>
+                        <p>Simulate a real interview with timed questions across multiple topics</p>
+                        
+                        <div class="setup-row">
+                            <div class="setup-item">
+                                <label>Test Duration:</label>
+                                <select id="mockDurationSelect" class="select-input">
+                                    <option value="15">15 Minutes (10 questions)</option>
+                                    <option value="30" selected>30 Minutes (20 questions)</option>
+                                    <option value="45">45 Minutes (30 questions)</option>
+                                    <option value="60">60 Minutes (40 questions)</option>
+                                </select>
+                            </div>
+                            <div class="setup-item">
+                                <label>Include Topics:</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" value="HTML" checked> HTML</label>
+                                    <label><input type="checkbox" value="CSS" checked> CSS</label>
+                                    <label><input type="checkbox" value="JavaScript" checked> JavaScript</label>
+                                    <label><input type="checkbox" value="DBMS" checked> DBMS</label>
+                                    <label><input type="checkbox" value="OS"> OS</label>
+                                    <label><input type="checkbox" value="Networking"> Networking</label>
+                                    <label><input type="checkbox" value="Aptitude"> Aptitude</label>
+                                    <label><input type="checkbox" value="HR" checked> HR</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-large" id="startMockTestBtn">
+                            <i class="fas fa-play"></i> Start Mock Interview
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mock Test Container -->
+                <div id="mockTestContainer" style="display: none;">
+                    <div class="card">
+                        <div class="mock-header">
+                            <div class="timer" id="mockTimer">
+                                <i class="fas fa-clock"></i> <span id="timerDisplay">30:00</span>
+                            </div>
+                            <div class="mock-progress">
+                                Question <span id="mockQuestionNum">1</span> / <span id="mockTotalQuestions">20</span>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <span class="question-badge" id="mockTopicBadge">HTML</span>
+                            <h3 id="mockQuestionText"></h3>
+                        </div>
+
+                        <div class="quiz-options" id="mockOptions"></div>
+
+                        <div class="mock-actions">
+                            <button class="btn btn-secondary" id="mockSkipBtn">
+                                <i class="fas fa-forward"></i> Skip
+                            </button>
+                            <button class="btn btn-danger" id="mockEndBtn">
+                                <i class="fas fa-stop"></i> End Test
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Favorites Page -->
+        <section id="favorites" class="page">
+            <div class="container">
+                <h2 class="page-title">
+                    <i class="fas fa-heart"></i> Your Favorite Questions
+                    <span id="favoriteCount" class="badge">0</span>
+                </h2>
+                <div id="favoritesContainer" class="favorites-container">
+                    <div class="empty-state">
+                        <i class="fas fa-heart empty-icon"></i>
+                        <h3>No favorites yet</h3>
+                        <p>Start practicing and mark questions you want to revisit!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Page -->
+        <section id="analytics" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-chart-line"></i> Your Progress Analytics</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalQuestions">0</div>
+                        <div class="stat-label">Total Questions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-success" id="correctCount">0</div>
+                        <div class="stat-label">Correct Answers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-warning" id="wrongCount">0</div>
+                        <div class="stat-label">Wrong Answers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-info" id="accuracyRate">0%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-book"></i> Topics Performance</h3>
+                    <div id="topicsProgress" class="topics-progress"></div>
+                </div>
+
+                <div class="card">
+    <h3><i class="fas fa-chart-pie"></i> Performance Chart</h3>
+    <div class="chart-container">
+        <canvas id="performanceChart"></canvas>
+    </div>
+</div>
+            </div>
+        </section>
+
+        <!-- Resources Page (PDF Downloads) -->
+        <section id="resources" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-download"></i> Download Resources</h2>
+                
+                <div class="card">
+                    <h3><i class="fas fa-file-pdf"></i> Generate PDF Study Materials</h3>
+                    <p>Download comprehensive study materials as PDF for offline learning</p>
+                    
+                    <div class="pdf-options">
+                        <div class="pdf-option">
+                            <h4>Complete Question Bank</h4>
+                            <p>All 100+ questions with detailed answers</p>
+                            <button class="btn btn-primary" onclick="generatePDF('all')">
+                                <i class="fas fa-download"></i> Download Complete PDF
+                            </button>
+                        </div>
+                        
+                        <div class="pdf-option">
+                            <h4>Top 50 Important Questions</h4>
+                            <p>Most frequently asked interview questions</p>
+                            <button class="btn btn-primary" onclick="generatePDF('top50')">
+                                <i class="fas fa-download"></i> Download Top 50
+                            </button>
+                        </div>
+                        
+                        <div class="pdf-option">
+                            <h4>Topic-Wise PDF</h4>
+                            <select id="pdfTopicSelect" class="select-input">
+                                <option value="">Select a topic...</option>
+                                <option value="HTML">HTML</option>
+                                <option value="CSS">CSS</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="DBMS">DBMS</option>
+                                <option value="OS">Operating Systems</option>
+                                <option value="Networking">Networking</option>
+                                <option value="Aptitude">Aptitude</option>
+                                <option value="HR">HR Questions</option>
+                            </select>
+                            <button class="btn btn-primary" id="downloadTopicPDFBtn">
+                                <i class="fas fa-download"></i> Download Topic PDF
+                            </button>
+                        </div>
+
+                        <div class="pdf-option">
+                            <h4>Your Favorites</h4>
+                            <p>Download all your bookmarked questions</p>
+                            <button class="btn btn-primary" onclick="generatePDF('favorites')">
+                                <i class="fas fa-download"></i> Download Favorites
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-chart-bar"></i> Performance Report</h3>
+                    <p>Download your complete progress report with analytics</p>
+                    <button class="btn btn-success" id="downloadReportBtn">
+                        <i class="fas fa-file-download"></i> Download Performance Report
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section id="settings" class="page">
+            <div class="container">
+                <h2 class="page-title"><i class="fas fa-cog"></i> Settings</h2>
+                
+                <div class="card">
+                    <h3>Appearance</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-palette"></i>
+                            <div>
+                                <strong>Dark Mode</strong>
+                                <p>Switch between light and dark theme</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="settingsDarkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Data Management</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-download"></i>
+                            <div>
+                                <strong>Export Data</strong>
+                                <p>Download your progress and favorites as JSON</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="exportDataBtn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-upload"></i>
+                            <div>
+                                <strong>Import Data</strong>
+                                <p>Restore your data from a backup file</p>
+                            </div>
+                        </div>
+                        <label class="btn btn-secondary">
+                            <i class="fas fa-upload"></i> Import
+                            <input type="file" id="importDataInput" accept=".json" style="display: none;">
+                        </label>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-trash-alt"></i>
+                            <div>
+                                <strong>Reset All Data</strong>
+                                <p>Clear all progress, favorites, and settings</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" id="resetDataBtn">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Profile Page -->
+        <section id="profile" class="page">
+            <div class="container">
+                <!-- Page Header -->
+                <div class="profile-page-header">
+                    <h2 class="page-title">
+                        <i class="fas fa-user-circle"></i> My Profile
+                    </h2>
+                    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                        Track your progress and manage your learning journey
+                    </p>
+                </div>
+
+                <!-- Profile Layout -->
+                <div class="profile-layout">
+                    <!-- Sidebar -->
+                    <div class="profile-sidebar">
+                        <!-- Profile Card -->
+                        <div class="card profile-card">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <span id="avatarInitials">KD</span>
+                                <div class="avatar-edit" onclick="openEditModal()">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                            <h2 class="profile-name" id="profileName">Krishna Dighe</h2>
+                            <p class="profile-email" id="profileEmail">krishna@example.com</p>
+                            <p class="profile-joined">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Joined January 2025</span>
+                            </p>
+                            <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="openEditModal()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="card">
+                            <h3><i class="fas fa-chart-bar"></i> Quick Stats</h3>
+                            <div class="profile-stats-list">
+                                <div class="profile-stat-item">
+                                    <span class="stat-label">Total Questions</span>
+                                    <span class="stat-value" id="profileTotalQuestions">0</span>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <span class="stat-label">Accuracy Rate</span>
+                                    <span class="stat-value" id="profileAccuracyRate">0%</span>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <span class="stat-label">Study Streak</span>
+                                    <span class="stat-value" id="profileStudyStreak">0 days</span>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <span class="stat-label">Favorites</span>
+                                    <span class="stat-value" id="profileFavoritesCount">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievements -->
+                        <div class="card">
+                            <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                            <div class="achievements-grid">
+                                <div class="achievement-badge unlocked" title="First Steps: Complete your first quiz">
+                                    <i class="fas fa-star"></i>
+                                    <span class="achievement-name">First Steps</span>
+                                </div>
+                                <div class="achievement-badge locked" title="Quiz Master: Complete 10 quizzes">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span class="achievement-name">Quiz Master</span>
+                                </div>
+                                <div class="achievement-badge locked" title="Perfectionist: Score 100% on a quiz">
+                                    <i class="fas fa-crown"></i>
+                                    <span class="achievement-name">Perfect</span>
+                                </div>
+                                <div class="achievement-badge locked" title="Dedicated: Maintain 7-day streak">
+                                    <i class="fas fa-fire"></i>
+                                    <span class="achievement-name">On Fire</span>
+                                </div>
+                                <div class="achievement-badge locked" title="Explorer: Try all topics">
+                                    <i class="fas fa-compass"></i>
+                                    <span class="achievement-name">Explorer</span>
+                                </div>
+                                <div class="achievement-badge locked" title="Collector: Save 50 favorites">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="achievement-name">Collector</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="profile-content">
+                        <!-- Study Streak -->
+                        <div class="card">
+                            <h3><i class="fas fa-fire"></i> Study Streak</h3>
+                            <div class="streak-display">
+                                <div class="streak-number" id="profileStreakNumber">0</div>
+                                <div class="streak-label">Day Streak 🔥</div>
+                            </div>
+                            <p style="color: var(--text-secondary); text-align: center; margin-top: 1rem;">
+                                Keep up the momentum! Complete daily challenges to maintain your streak.
+                            </p>
+                        </div>
+                        
+
+                        <!-- Topic Progress -->
+                        <div class="card">
+                            <h3><i class="fas fa-book-open"></i> Topic Progress</h3>
+                            <div class="topic-progress-list" id="profileTopicProgressList">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <!-- Learning Goals -->
+                        <div class="card">
+                            <h3><i class="fas fa-bullseye"></i> Learning Goals</h3>
+                            <div class="goals-grid">
+                                <div class="goal-card">
+                                    <div class="goal-header">
+                                        <span class="goal-title">Complete 20 Quizzes</span>
+                                        <span class="goal-status active">Active</span>
+                                    </div>
+                                    <div class="goal-progress">
+                                        <p class="goal-progress-text"><span id="goalQuizProgress">0</span> / 20 completed</p>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="goalQuizBar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="goal-card">
+                                    <div class="goal-header">
+                                        <span class="goal-title">Master JavaScript</span>
+                                        <span class="goal-status active">Active</span>
+                                    </div>
+                                    <div class="goal-progress">
+                                        <p class="goal-progress-text"><span id="goalJSProgress">0</span> / 30 questions</p>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="goalJSBar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="goal-card">
+                                    <div class="goal-header">
+                                        <span class="goal-title">7-Day Streak</span>
+                                        <span class="goal-status" id="goalStreakStatus">Pending</span>
+                                    </div>
+                                    <div class="goal-progress">
+                                        <p class="goal-progress-text"><span id="goalStreakProgress">0</span> / 7 days</p>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="goalStreakBar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <div class="activity-list" id="profileActivityList">
+                                <div class="empty-state">
+                                    <i class="fas fa-history empty-icon"></i>
+                                    <h3>No activity yet</h3>
+                                    <p>Start practicing to see your activity here!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferences -->
+                        <div class="card">
+                            <h3><i class="fas fa-cog"></i> Preferences</h3>
+                            <div class="profile-settings-section">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <i class="fas fa-bell"></i>
+                                        <div>
+                                            <strong>Daily Challenge Reminders</strong>
+                                            <p>Get notified to complete your daily challenge</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="reminderToggle" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <i class="fas fa-envelope"></i>
+                                        <div>
+                                            <strong>Email Notifications</strong>
+                                            <p>Receive progress updates via email</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="emailToggle">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <div>
+                                            <strong>Show Hints</strong>
+                                            <p>Display hints during quizzes</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="hintsToggle" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+     <!-- Edit Profile Modal -->
+<div class="modal" id="editProfileModal">
+    <div class="modal-backdrop" onclick="closeEditModal()"></div>
+    <div class="modal-content profile-modal-content">
+        <div class="modal-header">
+            <h2>Edit Profile</h2>
+            <button class="close-modal" onclick="closeEditModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="editProfileForm" onsubmit="saveProfile(event)">
+            <!-- Profile Picture Section -->
+            <div class="form-group">
+                <label>Profile Picture</label>
+                <div class="profile-pic-upload">
+                    <div class="profile-pic-preview" id="profilePicPreview">
+                        <span id="profilePicInitials">KD</span>
+                    </div>
+                    <div class="profile-pic-controls">
+                        <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                        <button type="button" class="btn btn-secondary btn-small" onclick="document.getElementById('profilePicInput').click()">
+                            <i class="fas fa-upload"></i> Upload Photo
+                        </button>
+                        <button type="button" class="btn btn-danger btn-small" onclick="removeProfilePic()" id="removePicBtn" style="display: none;">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="editName">Full Name</label>
+                <input type="text" id="editName" class="form-input" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email Address</label>
+                <input type="email" id="editEmail" class="form-input" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="editBio">Bio (Optional)</label>
+                <input type="text" id="editBio" class="form-input" placeholder="Tell us about yourself">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+        <!-- Privacy Policy Page -->
+<section id="privacy" class="page">
+    <div class="container">
+        <h2 class="page-title">
+            <i class="fas fa-shield-alt"></i> Privacy Policy
+        </h2>
+        
+        <div class="card policy-card">
+            <div class="policy-content">
+                <h3>Introduction</h3>
+                <p>Your privacy is important to us. This Privacy Policy explains how InterviewPrep AI collects, uses, and protects your personal information.</p>
+
+                <h3>Information We Collect</h3>
+                <p>We collect the following information:</p>
+                <ul>
+                    <li><strong>Personal Information:</strong> Name, email address, and profile details you provide</li>
+                    <li><strong>Usage Data:</strong> Quiz scores, practice progress, and study patterns</li>
+                    <li><strong>Device Information:</strong> Browser type, IP address, and device type</li>
+                    <li><strong>Cookies:</strong> Session and preference data stored locally</li>
+                </ul>
+
+                <h3>How We Use Your Information</h3>
+                <p>We use your information to:</p>
+                <ul>
+                    <li>Provide and improve our learning platform</li>
+                    <li>Personalize your learning experience</li>
+                    <li>Track your progress and send analytics</li>
+                    <li>Respond to your inquiries and support requests</li>
+                    <li>Ensure platform security and prevent fraud</li>
+                </ul>
+
+                <h3>Data Storage & Security</h3>
+                <p>Your data is stored locally in your browser's localStorage. We do not store personal information on external servers. However, any data you submit (like contact form messages) is sent to Formspree for processing.</p>
+
+                <h3>Third-Party Services</h3>
+                <p>We use:</p>
+                <ul>
+                    <li><strong>Formspree:</strong> For contact form submissions</li>
+                    <li><strong>Chart.js:</strong> For analytics visualization</li>
+                    <li><strong>Font Awesome:</strong> For icons</li>
+                </ul>
+
+                <h3>Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access your personal data</li>
+                    <li>Export your data using the export function</li>
+                    <li>Delete all your data using the reset function</li>
+                    <li>Opt-out of notifications</li>
+                </ul>
+
+                <h3>Changes to This Policy</h3>
+                <p>We may update this Privacy Policy periodically. Your continued use of the platform constitutes acceptance of any changes.</p>
+
+                <h3>Contact Us</h3>
+                <p>If you have privacy concerns, please use our <a href="#" onclick="openContactModal(event)" class="policy-link">contact form</a> to reach out.</p>
+
+                <p class="last-updated">Last updated: January 2025</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Terms of Service Page -->
+<section id="terms" class="page">
+    <div class="container">
+        <h2 class="page-title">
+            <i class="fas fa-file-contract"></i> Terms of Service
+        </h2>
+        
+        <div class="card policy-card">
+            <div class="policy-content">
+                <h3>Acceptance of Terms</h3>
+                <p>By accessing and using InterviewPrep AI, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+                <h3>License to Use</h3>
+                <p>InterviewPrep AI grants you a limited, non-exclusive license to use this platform for personal, non-commercial educational purposes only. You may not:</p>
+                <ul>
+                    <li>Reproduce, duplicate, or copy content for commercial use</li>
+                    <li>Modify or distribute the platform code without permission</li>
+                    <li>Attempt to hack or gain unauthorized access</li>
+                    <li>Use automated tools to scrape content</li>
+                    <li>Share login credentials or sell accounts</li>
+                </ul>
+
+                <h3>User Responsibilities</h3>
+                <p>You are responsible for:</p>
+                <ul>
+                    <li>Maintaining the confidentiality of your profile information</li>
+                    <li>All activities under your account</li>
+                    <li>Ensuring your use complies with applicable laws</li>
+                    <li>Reporting any unauthorized access immediately</li>
+                </ul>
+
+                <h3>Content Accuracy</h3>
+                <p>While we strive to provide accurate interview questions and answers, we make no warranty regarding the accuracy, completeness, or reliability of the content. Interview questions and answers are for educational purposes.</p>
+
+                <h3>Limitation of Liability</h3>
+                <p>InterviewPrep AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the platform, including but not limited to loss of data.</p>
+
+                <h3>Disclaimer of Warranties</h3>
+                <p>The platform is provided "as is" without warranties of any kind, either express or implied. We do not warrant that:</p>
+                <ul>
+                    <li>The platform will be uninterrupted or error-free</li>
+                    <li>Defects will be corrected</li>
+                    <li>The service is free from viruses or malicious code</li>
+                </ul>
+
+                <h3>User Conduct</h3>
+                <p>You agree not to:</p>
+                <ul>
+                    <li>Post offensive, abusive, or harassing content</li>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Attempt to compromise platform security</li>
+                    <li>Use the platform for commercial advantage</li>
+                </ul>
+
+                <h3>Intellectual Property Rights</h3>
+                <p>All content, including questions, answers, design, and code, is the property of InterviewPrep AI or its content suppliers and is protected by international copyright laws.</p>
+
+                <h3>Termination</h3>
+                <p>We reserve the right to terminate or suspend your account and access to the platform at any time, without notice, for conduct that we believe violates these Terms of Service.</p>
+
+                <h3>Governing Law</h3>
+                <p>These Terms of Service are governed by and construed in accordance with applicable laws, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+
+                <h3>Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Your continued use of the platform following the posting of revised Terms means you accept and agree to the changes.</p>
+
+                <h3>Contact Us</h3>
+                <p>If you have questions about these Terms of Service, please use our <a href="#" onclick="openContactModal(event)" class="policy-link">contact form</a>.</p>
+
+                <p class="last-updated">Last updated: January 2025</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2025 InterviewPrep AI. Made by <b>KV</b> Web Solutions</p>
+        <div class="footer-links">
+    <a href="#" onclick="navigateToPage('privacy'); event.preventDefault();">Privacy Policy</a>
+    <a href="#" onclick="navigateToPage('terms'); event.preventDefault();">Terms of Service</a>
+    <a href="#" id="contactLink" class="contact-trigger">Contact</a>
+</div>  
+    </div>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div id="contactModal" class="contact-modal">
+    <!-- Backdrop with blur -->
+    <div class="contact-modal-backdrop"></div>
+    
+    <!-- Modal Container -->
+    <div class="contact-modal-container">
+        <!-- Close Button -->
+        <button class="contact-modal-close" id="contactModalClose" type="button" aria-label="Close contact form">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <!-- Modal Header -->
+        <div class="contact-modal-header">
+            <h2><i class="fas fa-envelope"></i> Get in Touch</h2>
+            <p>Have questions? We'd love to hear from you!</p>
+        </div>
+        
+        <!-- Contact Form -->
+        <form id="contactForm" class="contact-form" action="https://formspree.io/f/xnnopljk" method="POST">
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="contactName">Full Name <span>*</span></label>
+                <input 
+                    type="text" 
+                    id="contactName" 
+                    name="name" 
+                    placeholder="Your full name"
+                    required
+                    class="contact-input"
+                    minlength="2"
+                >
+            </div>
+            
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="contactEmail">Email Address <span>*</span></label>
+                <input 
+                    type="email" 
+                    id="contactEmail" 
+                    name="email" 
+                    placeholder="your.email@example.com"
+                    required
+                    class="contact-input"
+                >
+            </div>
+            
+            <!-- Subject Field - ENHANCED WITH DROPDOWN -->
+            <div class="form-group">
+                <label for="contactSubject">Subject <span>*</span></label>
+                <select 
+                    id="contactSubject" 
+                    name="subject" 
+                    required
+                    class="contact-select"
+                >
+                    <option value="" disabled selected>Select a subject...</option>
+                    <option value="General Inquiry">💬 General Inquiry</option>
+                    <option value="Technical Support">🔧 Technical Support</option>
+                    <option value="Feature Request">✨ Feature Request</option>
+                    <option value="Bug Report">🐛 Bug Report</option>
+                    <option value="Feedback & Suggestions">💡 Feedback & Suggestions</option>
+                    <option value="Question about Questions">❓ Question about Questions</option>
+                    <option value="Account Issue">👤 Account Issue</option>
+                    <option value="Partnership Inquiry">🤝 Partnership Inquiry</option>
+                    <option value="Other">📋 Other</option>
+                </select>
+                
+                <!-- Custom Subject Input (shown when "Other" is selected) -->
+                <input 
+                    type="text" 
+                    id="customSubject" 
+                    name="custom_subject" 
+                    placeholder="Enter your custom subject"
+                    class="contact-input custom-subject-input"
+                    style="display: none; margin-top: 0.5rem;"
+                    minlength="3"
+                >
+            </div>
+            
+            <!-- Message Field -->
+            <div class="form-group">
+                <label for="contactMessage">Message <span>*</span></label>
+                <textarea 
+                    id="contactMessage" 
+                    name="message" 
+                    placeholder="Your message here... (minimum 10 characters)"
+                    rows="5"
+                    minlength="10"
+                    required
+                    class="contact-textarea"
+                ></textarea>
+                <small class="char-count">0 characters</small>
+            </div>
+            
+            <!-- Honeypot (Spam Protection) -->
+            <input type="hidden" name="_gotcha" style="display:none">
+            
+            <!-- Form Actions -->
+            <div class="contact-form-actions">
+                <button type="button" class="contact-btn-cancel" id="contactFormCancel">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" class="contact-btn-submit" id="contactSubmitBtn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </div>
+            
+            <!-- Success/Error Message -->
+            <div id="formMessage" class="form-message" style="display: none;"></div>
+        </form>
+    </div>
+</div>
+
+<!-- SUCCESS MODAL (Popup after successful submission) -->
+<div id="successModal" class="success-modal">
+    <div class="success-modal-backdrop"></div>
+    <div class="success-modal-container">
+        <div class="success-animation">
+            <div class="success-checkmark">
+                <div class="check-icon">
+                    <span class="icon-line line-tip"></span>
+                    <span class="icon-line line-long"></span>
+                    <div class="icon-circle"></div>
+                    <div class="icon-fix"></div>
+                </div>
+            </div>
+        </div>
+        <h2 class="success-title">Message Sent Successfully!</h2>
+        <p class="success-message">Thank you for reaching out! We've received your message and will get back to you within 24-48 hours.</p>
+        <button class="success-btn" id="successModalClose">
+            <i class="fas fa-check"></i> Got it!
+        </button>
+    </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>
